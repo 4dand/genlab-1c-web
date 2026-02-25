@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+frontend/dist/
+
+# Environment (секреты — никогда не коммитим; шаблон .env.example остаётся в репозитории)
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project outputs
+code_outputs/
+logs/
+*.log
+
+# Database
+*.db
+
+# Docker (локальные переопределения compose)
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# Alembic
+alembic/versions/__pycache__/
