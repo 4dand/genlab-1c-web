@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: genlab
+      POSTGRES_USER: genlab
+      POSTGRES_PASSWORD: genlab
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U genlab"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://genlab:genlab@db:5432/genlab
+      SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY in .env}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin}
+    expose:
+      - "8000"
+    volumes:
+      - ./core/raw_results:/app/core/raw_results
+      - ./core/code_outputs:/app/core/code_outputs
+      - ./core/evaluations:/app/core/evaluations
+      - ./core/reports:/app/core/reports
+      - ./core/logs:/app/core/logs
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  pgdata:
