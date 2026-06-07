@@ -23,7 +23,9 @@
 
 ## 🎬 Видео-обзор
 
-<video src="https://github.com/4dand/genlab-1c-web/raw/main/video.mp4" controls width="100%"></video>
+![GenLab-1C Web — демо](assets/demo.gif)
+
+▶️ Полное видео — **[video.mp4](video.mp4)**
 
 ---
 
